@@ -1,5 +1,8 @@
 package com.ravimd.admon;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ProductInfo {
 	
 	private String id;  // Unique id for the produc 
@@ -26,7 +29,17 @@ public class ProductInfo {
 	}
 	
 	
-	public String getId() {
+	public ProductInfo(JSONObject prodInfo) throws JSONException {
+	  JSONObject basicInfo = prodInfo.getJSONObject("basic");
+    this.campaignName = basicInfo.getString("name");
+    this.buyUrl = basicInfo.getString("buyUrl");
+    this.price = basicInfo.getString("price");
+    this.picUrl = basicInfo.getString("thumbnail");
+    this.videoUrl = basicInfo.getString("videoUrl");
+  }
+
+
+  public String getId() {
 		return id;
 	}
 	public void setId(String id) {

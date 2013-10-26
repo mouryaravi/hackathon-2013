@@ -1,10 +1,18 @@
 package com.ravimd.admon;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.koushikdutta.async.http.AsyncHttpClient;
+import com.koushikdutta.async.http.AsyncHttpResponse;
 
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -43,29 +51,13 @@ public class DetailsActivity extends Activity {
 		
 		Log.d(this.getClass().getName(), "ID IN DETAILS "+id);
 		
-		ProductInfo pinfo = getInfo1(id);
-		
-		Log.d(this.getClass().getName(), "Name of the Campaigne is "+pinfo.getId());
-		
 		nameTV = (TextView)findViewById(R.id.details_text_name);
 		priceTV = (TextView)findViewById(R.id.details_text_price);
 		modelTV= (TextView)findViewById(R.id.details_text_model);
 		imageView = (ImageView)findViewById(R.id.details_image_thumb);
-		
 		videoV = (VideoView)findViewById(R.id.videoView1);
 		
-
-		nameTV.setText("Name :"+pinfo.getCampaignName());
-		priceTV.setText("Price :"+pinfo.getPrice());
-		modelTV.setText("Model :"+pinfo.getId());
-		
-		Log.d(this.getClass().getName(),"URL "+ pinfo.getVideoUrl());
-		
-		 Uri uri=Uri.parse(pinfo.getVideoUrl());
-		 
-		 ImageLoader imageLoader = new ImageLoader( imageView );
-		 imageLoader.executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, pinfo.getPicURL() );
-		 
+		updateProductDetails(id);
 	}
 
 	@Override
@@ -74,12 +66,34 @@ public class DetailsActivity extends Activity {
 		getMenuInflater().inflate(R.menu.details, menu);
 		return true;
 	}
-	
-	
-	private ProductInfo getInfo1(String id) {
-			return new ProductInfo("GALS4", "Samsung Galaxy S4","32000", "http://www.mysmartprice.com/mobile/samsung-galaxy-s4-msp2439", false, "http://www.youtube.com/watch?v=oUynugn9AYs&feature=player_detailpage", "http://www.samsung.com/common/img/logo.png") ;
-	}
-	
+
+  private void updateProductDetails(String id) {
+    AsyncHttpClient.getDefaultInstance().getJSONObject(
+        "http://admon.meteor.com/product/" + id,
+        new AsyncHttpClient.JSONObjectCallback() {
+
+          @Override
+          public void onCompleted(Exception arg0, AsyncHttpResponse arg1,
+              JSONObject prodInfo) {
+            Log.d(this.getClass().getName(),
+                "----- In final -----" + prodInfo.toString());
+            ProductInfo pInfo = null;
+            try {
+              pInfo = new ProductInfo(prodInfo);
+              nameTV.setText("Name :" + pInfo.getCampaignName());
+              priceTV.setText("Price :" + pInfo.getPrice());
+
+              ImageLoader imageLoader = new ImageLoader(imageView);
+              imageLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
+                  pInfo.getPicURL());
+
+            } catch (JSONException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+          }
+        });
+  }
 	
 	public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
 		 
