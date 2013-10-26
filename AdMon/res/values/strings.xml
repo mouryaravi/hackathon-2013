@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">admon</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="main_text_enterid">Enter ID Code</string>
+    <string name="main_button_submit">Submit</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="details_text_name">Name</string>
+    <string name="details_text_price">Rs. 0</string>
+    <string name="details_text_model">Model</string>
+    <string name="details_text_price1">Price</string>
+    <string name="details_button_buy">Buy</string>
+    <string name="details_button_follow">Follow</string>
+    <string name="details_button_pic">Pics</string>
+
+</resources>

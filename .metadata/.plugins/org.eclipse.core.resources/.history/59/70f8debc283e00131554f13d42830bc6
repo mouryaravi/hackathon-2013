@@ -1,0 +1,16 @@
+package com.ravimd.admon;
+
+public class ProductInfo {
+	
+	private String id;  // Unique id for the produc 
+	private String campaignName;  // Name of the add project 
+	private String model; 
+	private String price;  // Price of the product 
+	
+	// Link for the meta search engine of the prices 
+	private String buyUrl;
+	private boolean following; 
+	private String basicVideoUrl;
+	private String picURL;
+
+}
