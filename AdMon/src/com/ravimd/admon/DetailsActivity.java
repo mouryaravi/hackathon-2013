@@ -1,15 +1,21 @@
 package com.ravimd.admon;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.net.URL;
+import java.net.URLConnection;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,22 +63,9 @@ public class DetailsActivity extends Activity {
 		
 		 Uri uri=Uri.parse(pinfo.getVideoUrl());
 		 
-		 videoV.setVideoURI(uri);
+		 ImageLoader imageLoader = new ImageLoader( imageView );
+		 imageLoader.executeOnExecutor( AsyncTask.THREAD_POOL_EXECUTOR, pinfo.getPicURL() );
 		 
-		 
-		 try     
-		    {
-			 	URL url = new URL(pinfo.getPicURL());
-		        final int THUMBNAIL_SIZE = 64;
-		        FileInputStream fis = new FileInputStream(Environment.getExternalStorageDirectory() + "/Download/"+pinfo.getId()+".JPG");
-		        Bitmap imageBitmap = BitmapFactory.decodeStream(fis);
-		        imageBitmap = Bitmap.createScaledBitmap(imageBitmap, THUMBNAIL_SIZE, THUMBNAIL_SIZE, false);
-		        imageView.setImageBitmap(imageBitmap);
-		    }
-		    catch(Exception ex) {
-		    	Log.d(this.getClass().getName(), "EXC1"+ex.getMessage());
-		    }
-	
 	}
 
 	@Override
@@ -84,7 +77,46 @@ public class DetailsActivity extends Activity {
 	
 	
 	private ProductInfo getInfo1(String id) {
-			return new ProductInfo("GALS4", "Samsung Galaxy S4","32000", "http://www.mysmartprice.com/mobile/samsung-galaxy-s4-msp2439", false, "http://www.youtube.com/watch?v=oUynugn9AYs&feature=player_detailpage", "http://www.samsung.com/global/microsite/galaxys4/mobile/images/img_gallery_w1.jpg") ;
+			return new ProductInfo("GALS4", "Samsung Galaxy S4","32000", "http://www.mysmartprice.com/mobile/samsung-galaxy-s4-msp2439", false, "http://www.youtube.com/watch?v=oUynugn9AYs&feature=player_detailpage", "http://www.samsung.com/common/img/logo.png") ;
 	}
+	
+	
+	public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
+		 
+		  private final WeakReference<ImageView> viewReference;
+		 
+		  public ImageLoader( ImageView view ) {
+		    viewReference = new WeakReference<ImageView>( view );
+		  }
+		 
+		  @Override
+		  protected Bitmap doInBackground( String... params ) {
+		    return loadBitmap( params[ 0 ] );
+		  }
+		 
+		  @Override
+		  protected void onPostExecute( Bitmap bitmap ) {
+		    ImageView imageView = viewReference.get();
+		    if( imageView != null ) {
+		      imageView.setImageBitmap( bitmap );
+		    }
+		  }
+		 
+		  public Bitmap loadBitmap(String url) {
+			  try 
+			  {
+				  URLConnection conn = new URL( url ).openConnection();
+				  conn.connect();
+				  return BitmapFactory.decodeStream( conn.getInputStream() );
+			  }
+			  catch(Exception e) {
+				  e.printStackTrace();
+			  }
+			  return null;
+		  }
+		 
+		}
+	
+	
 
 }

@@ -21,7 +21,7 @@ public class ProductInfo {
 		this.buyUrl = buyUrl;
 		this.following = following; 
 		this.videoUrl = videoUrl;
-		this.picUrl = picUrl;
+		this.picUrl = picURL;
 		
 	}
 	
