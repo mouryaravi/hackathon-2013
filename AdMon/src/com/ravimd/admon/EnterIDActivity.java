@@ -2,6 +2,10 @@ package com.ravimd.admon;
 
 
 
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import android.os.Bundle;
 
 
@@ -58,6 +62,25 @@ public class EnterIDActivity extends Activity {
 		startActivity(intent);
 	}
 	
+	public void onScan(View v) {
+	  Log.d(this.getClass().getName(), "On scan...");
+	  IntentIntegrator integrator = new IntentIntegrator(this);
+	  integrator.initiateScan();
+	}
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    IntentResult scanningResult = IntentIntegrator.parseActivityResult(
+        requestCode, resultCode, intent);
+    if (scanningResult != null) {
+      Toast toast = Toast.makeText(this,
+          "Done: " + scanningResult.getContents(), Toast.LENGTH_LONG);
+      toast.show();
+    }
+    else {
+      Toast toast = Toast.makeText(this, "Didn't get it", Toast.LENGTH_LONG);
+      toast.show();
+    }
+	}
 	
 
 }

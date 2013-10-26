@@ -14,5 +14,6 @@
     <string name="details_button_buy">Buy</string>
     <string name="details_button_follow">Follow</string>
     <string name="details_button_pic">Pics</string>
+    <string name="main_button_scan">Scan</string>
 
 </resources>

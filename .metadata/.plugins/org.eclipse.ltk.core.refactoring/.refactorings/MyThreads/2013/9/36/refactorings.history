@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Extracts string &apos;null&apos; into R.string.main_text_txt" description="Extracts string &apos;null&apos; into R.string.main_text_txt" flags="6" id="com.android.ide.eclipse.adt.refactoring.extract.string" mode="SELECT_NEW_ID" proj="/MyThreads" rplc-all-java="false" rplc-all-xml="false" stamp="1378457853536"/>
-</session>
