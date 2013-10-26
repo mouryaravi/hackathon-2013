@@ -25,18 +25,18 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f08000c;
-        public static final int details_button_buy=0x7f080005;
-        public static final int details_button_follow=0x7f080002;
-        public static final int details_button_pics=0x7f080006;
-        public static final int details_image_thumb=0x7f080007;
+        public static final int details_button_buy=0x7f080006;
+        public static final int details_button_follow=0x7f080007;
+        public static final int details_button_pics=0x7f080001;
+        public static final int details_image_thumb=0x7f080003;
         public static final int details_text_model=0x7f080000;
-        public static final int details_text_name=0x7f080001;
-        public static final int details_text_price=0x7f080003;
+        public static final int details_text_name=0x7f080002;
+        public static final int details_text_price1=0x7f080004;
         public static final int main_button_scan=0x7f08000b;
         public static final int main_button_submit=0x7f08000a;
         public static final int main_edit_maintext=0x7f080009;
         public static final int main_text_enterid=0x7f080008;
-        public static final int videoView1=0x7f080004;
+        public static final int videoView1=0x7f080005;
     }
     public static final class layout {
         public static final int activity_details=0x7f030000;

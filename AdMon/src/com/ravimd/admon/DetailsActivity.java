@@ -25,6 +25,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -37,7 +38,7 @@ public class DetailsActivity extends Activity {
 	TextView priceTV; 
 	TextView modelTV;
 	ImageView imageView;
-	
+	ProductInfo pInfo;
 	VideoView videoV;
 
 	@Override
@@ -52,7 +53,7 @@ public class DetailsActivity extends Activity {
 		Log.d(this.getClass().getName(), "ID IN DETAILS "+id);
 		
 		nameTV = (TextView)findViewById(R.id.details_text_name);
-		priceTV = (TextView)findViewById(R.id.details_text_price);
+		priceTV = (TextView)findViewById(R.id.details_text_price1);
 		modelTV= (TextView)findViewById(R.id.details_text_model);
 		imageView = (ImageView)findViewById(R.id.details_image_thumb);
 		videoV = (VideoView)findViewById(R.id.videoView1);
@@ -66,6 +67,11 @@ public class DetailsActivity extends Activity {
 		getMenuInflater().inflate(R.menu.details, menu);
 		return true;
 	}
+	
+	public void onBuy(View view) {
+		Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(pInfo.getBuyUrl()));
+		startActivity(myIntent);
+	}
 
   private void updateProductDetails(String id) {
     AsyncHttpClient.getDefaultInstance().getJSONObject(
@@ -77,7 +83,7 @@ public class DetailsActivity extends Activity {
               JSONObject prodInfo) {
             Log.d(this.getClass().getName(),
                 "----- In final -----" + prodInfo.toString());
-            ProductInfo pInfo = null;
+            pInfo = null;
             try {
               pInfo = new ProductInfo(prodInfo);
               nameTV.setText("Name :" + pInfo.getCampaignName());

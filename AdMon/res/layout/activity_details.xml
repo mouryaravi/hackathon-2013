@@ -12,17 +12,18 @@
         android:id="@+id/details_text_model"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/details_text_name"
-        android:layout_alignRight="@+id/details_button_follow"
+        android:layout_alignLeft="@+id/details_button_pics"
         android:layout_below="@+id/details_text_name"
         android:layout_marginTop="18dp"
+        android:layout_toLeftOf="@+id/details_image_thumb"
         android:text="@string/details_text_model" />
 
     <TextView
-        android:id="@+id/details_text_price"
+        android:id="@+id/details_text_price1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/details_text_name"
+        android:layout_alignLeft="@+id/details_text_model"
+        android:layout_alignRight="@+id/details_text_model"
         android:layout_below="@+id/details_text_model"
         android:layout_marginTop="23dp"
         android:text="@string/details_text_price1" />
@@ -32,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/details_text_model"
-        android:layout_below="@+id/details_text_price"
+        android:layout_below="@+id/details_text_price1"
         android:layout_marginTop="146dp" />
 
     <Button
@@ -42,6 +43,7 @@
         android:layout_alignBaseline="@+id/details_button_follow"
         android:layout_alignBottom="@+id/details_button_follow"
         android:layout_alignRight="@+id/videoView1"
+        android:onClick="onBuy"
         android:text="@string/details_button_buy" />
 
     <Button
@@ -63,9 +65,8 @@
         android:id="@+id/details_text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/details_text_model"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="19dp"
         android:layout_marginTop="18dp"
         android:text="@string/details_text_name" />
 
@@ -73,7 +74,9 @@
         android:id="@+id/details_image_thumb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/details_button_buy"
+        android:layout_above="@+id/details_button_buy"
+        android:layout_alignLeft="@+id/details_button_follow"
+        android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/details_text_name"
         android:src="@drawable/ic_launcher" />
 

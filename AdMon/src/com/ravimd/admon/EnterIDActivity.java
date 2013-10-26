@@ -72,12 +72,18 @@ public class EnterIDActivity extends Activity {
     IntentResult scanningResult = IntentIntegrator.parseActivityResult(
         requestCode, resultCode, intent);
     if (scanningResult != null) {
-      Toast toast = Toast.makeText(this,
-          "Done: " + scanningResult.getContents(), Toast.LENGTH_LONG);
-      toast.show();
+    	
+      String id = 	scanningResult.getContents();	
+//      Toast toast = Toast.makeText(this,
+//          "Done: " + id, Toast.LENGTH_LONG);
+//      toast.show();
+      
+        intent = new Intent(this, DetailsActivity.class);
+		intent.putExtra(AppUtil.AD_ID, id);
+		startActivity(intent);
     }
     else {
-      Toast toast = Toast.makeText(this, "Didn't get it", Toast.LENGTH_LONG);
+      Toast toast = Toast.makeText(this, "Unable to scan for", Toast.LENGTH_LONG);
       toast.show();
     }
 	}
