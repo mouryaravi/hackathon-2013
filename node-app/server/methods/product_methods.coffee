@@ -1,7 +1,7 @@
 
 Meteor.methods
   addProduct: (productParams)->
-    console.log 'Adding product: ', productParams
+    console.log 'Adding product [method]: ', productParams
 
   uploadFile: (file, options)->
     console.log 'uploading file: ', file.name, options

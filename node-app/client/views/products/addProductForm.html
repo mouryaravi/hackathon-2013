@@ -1,0 +1,45 @@
+<template name="addProductForm">
+  <form class="form-horizontal" id="newProduct" method="post" action="/products">
+    <fieldset>
+      <legend>Your ad details</legend>
+      <div class="control-group">
+        <label class="control-label" for="inputName">Name</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="inputName" placeholder="What's your product name?">
+          </div>
+        </label>
+      </div>      
+      <div class="control-group">
+        <label class="control-label" for="inputPrice">Price</label>
+          <div class="controls">
+            <input type="text" class="input-xlarge" id="inputPrice" placeholder="How much are you quoting?">
+          </div>
+        </label>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="inputId">Ad Hub ID</label>
+          <div class="controls">
+            <input type="text" class="input-small" id="inputId" placeholder="Select Short ID">
+          </div>
+        </label>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="inputThumbnail">Upload Image</label>
+          <div class="controls">
+            <input type="file" class="input-small" id="inputThumbnail" />
+          </div>
+        </label>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="inputVideo">Upload Video</label>
+          <div class="controls">
+            <input type="file" class="input-small" id="inputVideo" />
+          </div>
+        </label>
+      </div>
+    </fieldset>
+      <div class="control-group">
+        <div type="submit" class="btn">Add</div>
+      </div>
+  </form>
+</template>
