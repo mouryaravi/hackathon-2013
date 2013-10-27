@@ -13,3 +13,4 @@ class @ProductController extends RouteController
       'accept': '*/*'
     @response.end prodResp
 
+

@@ -12,3 +12,6 @@ underscore
 
 iron-router
 bootstrap
+
+meteor-file
+http
