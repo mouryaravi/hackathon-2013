@@ -8,12 +8,18 @@ Meteor.methods
 
   saveFile: (file, name, id, encoding)->
     console.log 'got file: ', name, id
-    if name == 'thumbnail'
-      return
     fs = Npm.require('fs')
-    fs.writeFile '/Users/ravi/cf/stack/video-processor-tomcat-7.0.47/videos/' + id + '.mp4', file, encoding, (err)->
-      if err
-        throw new Error 'cant upload file: ' + id
-      else
-        console.log 'File is added : ', id, 'encoding: ', encoding
-    new VideoProcessor().processVideo(id)
+    if name == 'thumbnail'
+      fs.writeFile '/Users/ravi/cf/stack/video-processor-tomcat-7.0.47/images/' + id + '.jpg', file, encoding, (err)->
+        if err
+          console.log err
+          throw (new Meteor.Error 'cant upload file: ' + id, err)
+        else
+          console.log 'Added image file: ', id
+    else
+      fs.writeFile '/Users/ravi/cf/stack/video-processor-tomcat-7.0.47/videos/' + id + '.mp4', file, encoding, (err)->
+        if err
+          throw (new Meteor.Error 'cant upload file: ' + id, err)
+        else
+          console.log 'File is added : ', id, 'encoding: ', encoding
+      new VideoProcessor().processVideo(id)
