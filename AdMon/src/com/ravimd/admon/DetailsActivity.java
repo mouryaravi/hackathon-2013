@@ -1,5 +1,6 @@
 package com.ravimd.admon;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,8 +19,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,7 +31,9 @@ import android.graphics.drawable.Drawable;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import android.util.Log;
@@ -40,6 +46,8 @@ public class DetailsActivity extends Activity {
 	ImageView imageView;
 	ProductInfo pInfo;
 	VideoView videoV;
+	
+	private PendingIntent mAlarmSender;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +61,23 @@ public class DetailsActivity extends Activity {
 		Log.d(this.getClass().getName(), "ID IN DETAILS "+id);
 		
 		nameTV = (TextView)findViewById(R.id.details_text_name);
-		priceTV = (TextView)findViewById(R.id.details_text_price1);
-		modelTV= (TextView)findViewById(R.id.details_text_model);
+		priceTV = (TextView)findViewById(R.id.details_text_price);
+		//modelTV= (TextView)findViewById(R.id.details_text_model);
 		imageView = (ImageView)findViewById(R.id.details_image_thumb);
 		videoV = (VideoView)findViewById(R.id.videoView1);
 		
 		updateProductDetails(id);
+		
+		
+	     MediaController mc = new MediaController(this);
+	     videoV.setMediaController(mc);
+	     Log.d(this.getClass().getName(), "LOCATION OF VIDEO:"+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES) +"/Galaxy_S4.mp4");
+	     
+	     Log.d(this.getClass().getName(),Environment.getExternalStorageDirectory() +"/Galaxy_S4.mp4");
+	     videoV.setVideoPath(Environment.getExternalStorageDirectory() +"/Galaxy_S4.mp4");
+	     videoV.requestFocus();
+	     
+	     
 	}
 
 	@Override
@@ -92,7 +111,7 @@ public class DetailsActivity extends Activity {
               ImageLoader imageLoader = new ImageLoader(imageView);
               imageLoader.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR,
                   pInfo.getPicURL());
-
+              
             } catch (JSONException e) {
               // TODO Auto-generated catch block
               e.printStackTrace();
@@ -100,6 +119,35 @@ public class DetailsActivity extends Activity {
           }
         });
   }
+  
+   public void onFollow(View view) {
+	   
+	   // Create an IntentSender that will launch our service, to be scheduled
+       // with the alarm manager.
+	
+	   
+       long firstTime = SystemClock.elapsedRealtime();
+       
+	   Log.d(this.getClass().getName(), "DETAIL : SERVICE STARTED WITH ALRAM MANAGER");
+       mAlarmSender = PendingIntent.getService(this,
+               0, new Intent(this, AlarmService_Service.class), 0);
+       
+       // Schedule the alarm!
+       AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+       am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                       firstTime, 30*1000, mAlarmSender);
+
+       // Tell the user about what we did.
+       Toast.makeText(this, "Alarm is set",
+               Toast.LENGTH_LONG).show();
+	   
+   }
+   
+   public void onPics(View view) {
+	   Intent intent = new Intent(this, PicsActivity.class);
+	   intent.putExtra(AppUtil.IMAGE_URL, pInfo.getPicURL());
+	   startActivity(intent);
+   }
 	
 	public class ImageLoader extends AsyncTask<String, Integer, Bitmap> {
 		 
