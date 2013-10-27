@@ -16,9 +16,9 @@
     <string name="details_button_pic">Pics</string>
     <string name="main_button_scan">Scan</string>
     <string name="main_button_upload">Upload Ad</string>
-    <string name="alarm_service_started">The alarm service has started running</string>
-    <string name="alarm_service_finished">The alarm service has finished running</string>
-    <string name="alarm_service_label">Sample Alarm Service</string>
+    <string name="alarm_service_started">Price of the product you are following changed</string>
+    <string name="alarm_service_finished">You stopped following Ad</string>
+    <string name="alarm_service_label">Price of the product you are following changed</string>
     <string name="title_activity_pics">PicsActivity</string>
 
 </resources>

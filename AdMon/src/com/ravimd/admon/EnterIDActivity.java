@@ -1,5 +1,6 @@
 package com.ravimd.admon;
 
+import java.io.File;
 import java.net.URISyntaxException;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -90,51 +91,53 @@ public class EnterIDActivity extends Activity {
 	
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     
-    
-    if (requestCode == FILE_SELECT_CODE ) {
-    	
-    if (resultCode == RESULT_OK) {
-        // Get the Uri of the selected file 
-        Uri uri = intent.getData();
-        Log.d(this.getClass().getName(), "File Uri: " + uri.toString());
-        // Get the path
-        String path = null;
-		try {
-			path = getPath(this, uri);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        Log.d(this.getClass().getName(), "File Path: " + path);
-        // Get the file instance
-        // File file = new File(path);
-        // Initiate the upload
-     }
-    
-    }else {
-    
-    // Now look for scanning result 
+   
     IntentResult scanningResult = IntentIntegrator.parseActivityResult(
             requestCode, resultCode, intent);
     
     if (scanningResult != null) {
     	
       String id = 	scanningResult.getContents();	
-//      Toast toast = Toast.makeText(this,
-//          "Done: " + id, Toast.LENGTH_LONG);
-//      toast.show();
+      Log.d(this.getClass().getName(), "ID From scan result "+id);
+      Toast toast = Toast.makeText(this,
+         "ID: " + id, Toast.LENGTH_LONG);
+      toast.show();
       
-        intent = new Intent(this, DetailsActivity.class);
-		intent.putExtra(AppUtil.AD_ID, id);
-		startActivity(intent);
+      intent = new Intent(this, DetailsActivity.class);
+	  intent.putExtra(AppUtil.AD_ID, id);
+	  startActivity(intent);
     }
     else {
-      Toast toast = Toast.makeText(this, "Unable to scan for", Toast.LENGTH_LONG);
+      Toast toast = Toast.makeText(this, "Please select video to upload", Toast.LENGTH_LONG);
       toast.show();
     }
     
+    
+  if (requestCode == FILE_SELECT_CODE ) {
+ 	
+	  if (resultCode == RESULT_OK) {
+//      Get the Uri of the selected file 
+      Uri uri = intent.getData();
+      Log.d(this.getClass().getName(), "File Uri: " + uri.toString());
+//      // Get the path
+      String path = null;
+		try {
+			path = getPath(this, uri);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+      Log.d(this.getClass().getName(), "File Path: " + path);
+      // Get the file instance
+      File file = new File(path);
     }
-	}
+	  
+  }	  
+}
+	  
+
+ 
 	
 	
 	public  String getPath(Context context, Uri uri) throws URISyntaxException {

@@ -71,10 +71,10 @@ public class DetailsActivity extends Activity {
 		
 	     MediaController mc = new MediaController(this);
 	     videoV.setMediaController(mc);
-	     Log.d(this.getClass().getName(), "LOCATION OF VIDEO:"+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES) +"/Galaxy_S4.mp4");
+	     Log.d(this.getClass().getName(), "LOCATION OF VIDEO:"+Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES) +"/"+id+".mp4");
 	     
 	     Log.d(this.getClass().getName(),Environment.getExternalStorageDirectory() +"/Galaxy_S4.mp4");
-	     videoV.setVideoPath(Environment.getExternalStorageDirectory() +"/Galaxy_S4.mp4");
+	     videoV.setVideoPath(Environment.getExternalStorageDirectory() +"/"+id+".mp4");
 	     videoV.requestFocus();
 	     
 	     
@@ -128,9 +128,16 @@ public class DetailsActivity extends Activity {
 	   
        long firstTime = SystemClock.elapsedRealtime();
        
+       Intent actualIntent = new Intent(this, AlarmService_Service.class);
+       actualIntent.putExtra(AppUtil.AD_ID, pInfo.getId());
+       
+       Log.d(this.getClass().getName(), "PENDING INTENT :"+pInfo.getId());
+       
 	   Log.d(this.getClass().getName(), "DETAIL : SERVICE STARTED WITH ALRAM MANAGER");
        mAlarmSender = PendingIntent.getService(this,
-               0, new Intent(this, AlarmService_Service.class), 0);
+               0,actualIntent , 0);
+       
+      
        
        // Schedule the alarm!
        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
@@ -184,6 +191,10 @@ public class DetailsActivity extends Activity {
 		  }
 		 
 		}
+	
+	
+	
+
 	
 	
 

@@ -16,12 +16,23 @@ import android.widget.Toast;
 
 public class AlarmService_Service extends Service {
     NotificationManager mNM;
-
+    private String pId = "GALS4";
+    @Override
+    @Deprecated
+    public void onStart(Intent intent, int startId) {
+    	// TODO Auto-generated method stub
+    	super.onStart(intent, startId);
+    	pId = intent.getStringExtra(AppUtil.AD_ID);
+    	
+    	Log.d(this.getClass().getName(), "PENDING EVENT RECIEVED IS"+pId);
+    }
     @Override
     public void onCreate() {
+    	
+    	
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-
-        Log.d(this.getClass().getName(), "AlarmService_Service Started ");
+        
+        Log.d(this.getClass().getName(), "You are following add "+pId);
         // show the icon in the status bar
         showNotification();
 
@@ -36,9 +47,6 @@ public class AlarmService_Service extends Service {
     public void onDestroy() {
         // Cancel the notification -- we use the same ID that we had used to start it
         mNM.cancel(R.string.alarm_service_started);
-
-        // Tell the user we stopped.
-        Toast.makeText(this, R.string.alarm_service_finished, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -80,10 +88,13 @@ public class AlarmService_Service extends Service {
         // Set the icon, scrolling text and timestamp
         Notification notification = new Notification(R.drawable.stat_sample, text,
                 System.currentTimeMillis());
+        
+        Intent dIntent = new Intent(this, DetailsActivity.class);
+        dIntent.putExtra(AppUtil.AD_ID, pId);
 
         // The PendingIntent to launch our activity if the user selects this notification
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, DetailsActivity.class), 0);
+        		dIntent, 0);
 
         // Set the info for the views that show in the notification panel.
         notification.setLatestEventInfo(this, getText(R.string.alarm_service_label),
